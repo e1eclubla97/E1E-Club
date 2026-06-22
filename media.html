@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Media — The E1E Club — The E1E Club</title>
+
+<style>
+:root{
+  --black:#0A0A0A;--dark:#111111;--panel:rgba(22,22,22,0.93);
+  --red:#CC0000;--red-hot:#FF1A1A;
+  --green:#1B5E20;--green-b:#2E7D32;--green-lt:#4CAF50;
+  --gold:#F5C400;--gold-lt:#FFD700;
+  --white:#FFFFFF;--gray:#888888;--lgray:#222222;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Barlow",sans-serif;
+  background:var(--black);color:var(--white);overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;top:0;left:0;right:0;bottom:0;z-index:-1;
+  background-color:#0A0A0A;
+  background-image:
+    linear-gradient(45deg,#1A1A1A 25%,transparent 25%),
+    linear-gradient(-45deg,#1A1A1A 25%,transparent 25%),
+    linear-gradient(45deg,transparent 75%,#1A1A1A 75%),
+    linear-gradient(-45deg,transparent 75%,#1A1A1A 75%);
+  background-size:32px 32px;
+  background-position:0 0,0 16px,16px -16px,-16px 0;
+}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;height:58px;
+  background:rgba(27,94,32,0.97);border-bottom:3px solid var(--red);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;backdrop-filter:blur(8px);
+}
+.nav-logo{
+  font-family:"Barlow Condensed",sans-serif;font-size:1.5rem;font-weight:900;
+  color:var(--gold);letter-spacing:4px;text-decoration:none;text-transform:uppercase;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.nav-logo .slash{color:var(--red);}
+.nav-links{display:flex;gap:0.1rem;list-style:none;}
+.nav-links a{
+  font-family:"Barlow Condensed",sans-serif;font-size:0.9rem;font-weight:600;
+  color:rgba(255,255,255,0.75);text-decoration:none;letter-spacing:2px;text-transform:uppercase;
+  padding:0.4rem 0.85rem;transition:color .15s,background .15s;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);background:rgba(0,0,0,0.25);}
+.nav-links a.active{border-bottom:2px solid var(--gold);}
+.nav-cta{background:var(--red)!important;color:var(--white)!important;border-bottom:none!important;}
+.nav-cta:hover{background:var(--red-hot)!important;}
+@media(max-width:900px){.nav-links{display:none;}.mob-menu{display:flex!important;}}
+.mob-menu{
+  display:none;flex-direction:column;gap:4px;cursor:pointer;
+  padding:6px;background:transparent;border:none;
+}
+.mob-menu span{display:block;width:22px;height:2px;background:var(--white);}
+.mob-nav{
+  display:none;position:fixed;top:58px;left:0;right:0;bottom:0;
+  background:rgba(10,10,10,0.98);z-index:299;
+  flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;
+}
+.mob-nav.open{display:flex;}
+.mob-nav a{
+  font-family:"Barlow Condensed",sans-serif;font-size:2.5rem;font-weight:900;
+  font-style:italic;text-transform:uppercase;color:var(--white);text-decoration:none;
+  letter-spacing:3px;transition:color .15s;
+}
+.mob-nav a:hover{color:var(--red);}
+.mob-nav a.donate-mob{color:var(--gold);}
+.ticker{
+  background:var(--red);padding:0.65rem 0;overflow:hidden;
+  border-top:4px solid var(--green);border-bottom:4px solid var(--green);
+}
+.ticker-track{display:flex;animation:ticker-scroll 30s linear infinite;white-space:nowrap;}
+.ticker-item{
+  font-family:"Barlow Condensed",sans-serif;font-size:0.85rem;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;color:var(--white);
+  padding:0 2rem;display:flex;align-items:center;gap:1rem;
+}
+.ticker-item::after{content:"★";color:var(--gold);}
+@keyframes ticker-scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.section{padding:5rem 2rem;min-height:calc(100vh - 58px);}
+.section-inner{max-width:1140px;margin:0 auto;}
+.eyebrow{
+  font-family:"DM Mono",monospace;font-size:0.68rem;font-weight:500;
+  color:var(--green-b);letter-spacing:4px;text-transform:uppercase;
+  margin-bottom:0.8rem;display:flex;align-items:center;gap:8px;
+}
+.eyebrow::before{content:"";display:block;width:24px;height:2px;background:var(--green-b);}
+.eyebrow.red{color:var(--red);}
+.eyebrow.red::before{background:var(--red);}
+.eyebrow.gold{color:var(--gold);}
+.eyebrow.gold::before{background:var(--gold);}
+.section-title{
+  font-family:"Barlow Condensed",sans-serif;
+  font-size:clamp(2.5rem,5vw,4rem);font-weight:900;font-style:italic;
+  text-transform:uppercase;line-height:0.9;margin-bottom:1.5rem;
+}
+.red{color:var(--red);}.gold{color:var(--gold);}.green{color:var(--green-lt);}
+.btn{
+  display:inline-block;font-family:"Barlow Condensed",sans-serif;
+  font-size:1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  text-decoration:none;padding:0.75rem 2rem;border-radius:1px;
+  transition:transform .15s,background .2s,box-shadow .2s;border:none;cursor:pointer;
+}
+.btn-red{background:var(--red);color:var(--white);}
+.btn-red:hover{background:var(--red-hot);transform:translateY(-2px);box-shadow:0 8px 24px rgba(204,0,0,0.4);}
+.btn-ghost{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.2);}
+.btn-ghost:hover{border-color:var(--white);transform:translateY(-2px);}
+.btn-gold{background:var(--gold);color:var(--black);}
+.btn-gold:hover{background:var(--gold-lt);transform:translateY(-2px);}
+.btn-green{background:var(--green-b);color:var(--white);}
+.btn-green:hover{background:var(--green);transform:translateY(-2px);}
+footer{
+  background:rgba(10,10,10,0.95);padding:2.5rem 2rem;
+  border-top:3px solid var(--green-b);
+}
+.footer-inner{
+  max-width:1140px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;
+}
+.footer-logo{font-family:"Barlow Condensed",sans-serif;font-size:1.8rem;font-weight:900;font-style:italic;letter-spacing:4px;color:var(--white);text-transform:uppercase;}
+.footer-logo span{color:var(--green-lt);}
+.footer-tag{font-family:"DM Mono",monospace;font-size:0.68rem;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-top:0.2rem;}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+.footer-links a{font-family:"Barlow Condensed",sans-serif;font-size:0.85rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--green-lt);}
+.footer-legal{width:100%;font-family:"DM Mono",monospace;font-size:0.63rem;color:rgba(255,255,255,0.15);text-align:center;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.05);line-height:1.8;}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,700;1,900&family=Barlow:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">E1E<span class="slash">/</span>CLUB</a>
+  <ul class="nav-links">
+    <li><a href="index.html" id="nav-home">Home</a></li>
+    <li><a href="mission.html" id="nav-mission">Mission</a></li>
+    <li><a href="recipient.html" id="nav-recipient">Recipients</a></li>
+    <li><a href="menu.html" id="nav-menu">Menu</a></li>
+    <li><a href="findus.html" id="nav-findus">Find Us</a></li>
+    <li><a href="events.html" id="nav-events">Events</a></li>
+    <li><a href="media.html" id="nav-media">Media</a></li>
+    <li><a href="contact.html" id="nav-contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="mob-menu" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mob-nav" id="mob-nav">
+  <a href="index.html" onclick="toggleMenu()">Home</a>
+  <a href="mission.html" onclick="toggleMenu()">Mission</a>
+  <a href="recipient.html" onclick="toggleMenu()">Recipients</a>
+  <a href="menu.html" onclick="toggleMenu()">Menu</a>
+  <a href="findus.html" onclick="toggleMenu()">Find Us</a>
+  <a href="events.html" onclick="toggleMenu()">Events</a>
+  <a href="media.html" onclick="toggleMenu()">Media</a>
+  <a href="contact.html" onclick="toggleMenu()" class="donate-mob">Contact</a>
+</div>
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Everyone Eats</span>
+    <span class="ticker-item">Farmers Markets Weekly</span>
+    <span class="ticker-item">E1E Recipient Program</span>
+    <span class="ticker-item">Community First</span>
+    <span class="ticker-item">Culver City CA</span>
+    <span class="ticker-item">One Life at a Time</span>
+    <span class="ticker-item">Everyone Eats</span>
+    <span class="ticker-item">Farmers Markets Weekly</span>
+    <span class="ticker-item">E1E Recipient Program</span>
+    <span class="ticker-item">Community First</span>
+    <span class="ticker-item">Culver City CA</span>
+    <span class="ticker-item">One Life at a Time</span>
+  </div>
+</div>
+<div class="section" style="padding-top:calc(58px + 3rem);">
+  <div class="section-inner">
+    <p class="eyebrow">Media Hub</p>
+    <h1 class="section-title">Watch the <span class="red">journey.</span></h1>
+    <p style="font-size:1rem;font-weight:300;color:var(--gray);max-width:460px;line-height:1.7;margin-bottom:2rem;">Follow the E1E Recipient story in real time. Kitchen sessions. Market days. Life milestones. All of it on TikTok and Instagram.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,0.04);margin-bottom:2px;">
+      <div style="background:var(--panel);aspect-ratio:9/16;max-height:400px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;position:relative;overflow:hidden;cursor:pointer;">
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,0.01) 3px,rgba(255,255,255,0.01) 4px);"></div>
+        <div style="position:relative;z-index:1;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);">TikTok</div>
+        <div style="position:relative;z-index:1;width:48px;height:48px;border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--white);">▶</div>
+        <div style="position:relative;z-index:1;font-size:0.78rem;color:rgba(255,255,255,0.5);text-align:center;padding:0 1rem;line-height:1.4;">Recipient Story #1 — Introduction</div>
+      </div>
+      <div style="background:var(--panel);aspect-ratio:9/16;max-height:400px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;position:relative;overflow:hidden;cursor:pointer;">
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,0.01) 3px,rgba(255,255,255,0.01) 4px);"></div>
+        <div style="position:relative;z-index:1;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);">Instagram</div>
+        <div style="position:relative;z-index:1;width:48px;height:48px;border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--white);">▶</div>
+        <div style="position:relative;z-index:1;font-size:0.78rem;color:rgba(255,255,255,0.5);text-align:center;padding:0 1rem;line-height:1.4;">First Kitchen Session</div>
+      </div>
+      <div style="background:var(--panel);aspect-ratio:9/16;max-height:400px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;position:relative;overflow:hidden;cursor:pointer;">
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,0.01) 3px,rgba(255,255,255,0.01) 4px);"></div>
+        <div style="position:relative;z-index:1;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);">TikTok</div>
+        <div style="position:relative;z-index:1;width:48px;height:48px;border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--white);">▶</div>
+        <div style="position:relative;z-index:1;font-size:0.78rem;color:rgba(255,255,255,0.5);text-align:center;padding:0 1rem;line-height:1.4;">Market Day — El Segundo CFM</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:2px;background:rgba(255,255,255,0.04);">
+      <a href="https://tiktok.com/@e1eclub" target="_blank" style="flex:1;padding:1rem;background:var(--panel);font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);text-decoration:none;text-align:center;transition:background .2s;">↗ TikTok @E1E.Club</a>
+      <a href="https://instagram.com/e1eclub" target="_blank" style="flex:1;padding:1rem;background:var(--panel);font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);text-decoration:none;text-align:center;transition:background .2s;">↗ Instagram @E1E.Club</a>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">THE <span>E1E</span> CLUB</div>
+      <div class="footer-tag">Everyone Eats · Est. 2026</div>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="mission.html">Mission</a>
+      <a href="recipient.html">Recipients</a>
+      <a href="menu.html">Menu</a>
+      <a href="findus.html">Find Us</a>
+      <a href="events.html">Events</a>
+      <a href="media.html">Media</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-legal">
+      The E1E Club · California Nonprofit Public Benefit Corporation · Entity No. B20260169495<br>
+      11707 Chanera Ave, Hawthorne CA 90250 · Founder &amp; Executive Director: Jonathan Holland · © 2026
+    </div>
+  </div>
+</footer>
+<script>
+function toggleMenu(){document.getElementById("mob-nav").classList.toggle("open");}
+// Highlight active nav link
+const page = location.pathname.split("/").pop() || "index.html";
+const map = {"index.html":"nav-home","mission.html":"nav-mission","recipient.html":"nav-recipient","menu.html":"nav-menu","findus.html":"nav-findus","events.html":"nav-events","media.html":"nav-media","contact.html":"nav-contact"};
+if(map[page]){const el=document.getElementById(map[page]);if(el)el.classList.add("active");}
+</script>
+</body>
+</html>
